@@ -2,7 +2,7 @@ use cosmwasm_std::{Deps, DepsMut, Env, MessageInfo, Response};
 
 use cw721_base::state::TokenInfo;
 use cw721_base::MintMsg;
-use crate::state::{Extension, RestNFTContract};
+use crate::state::{Extension, AstroHeroContract};
 
 use crate::error::ContractError;
 use crate::state::{Config, CONFIG};
@@ -13,7 +13,7 @@ pub fn execute_burn(
     info: MessageInfo,
     token_id: String,
 ) -> Result<Response, ContractError> {
-    let cw721_contract = RestNFTContract::default();
+    let cw721_contract = AstroHeroContract::default();
 
     let token = cw721_contract.tokens.load(deps.storage, &token_id)?;
     // validate send permissions
@@ -33,7 +33,7 @@ pub fn execute_burn(
 
 // Copied private cw721 check here
 fn _check_can_send<T>(
-    cw721_contract: &RestNFTContract,
+    cw721_contract: &AstroHeroContract,
     deps: Deps,
     env: &Env,
     info: &MessageInfo,
@@ -77,7 +77,7 @@ pub fn execute_update(
     token_uri: Option<String>,
     extension: Extension,
 ) -> Result<Response, ContractError> {
-    let cw721_contract = RestNFTContract::default();
+    let cw721_contract = AstroHeroContract::default();
     let minter = cw721_contract.minter.load(deps.storage)?;
     if info.sender != minter {
         return Err(ContractError::Unauthorized {});
@@ -110,7 +110,7 @@ pub fn execute_freeze(
     _env: Env,
     info: MessageInfo,
 ) -> Result<Response, ContractError> {
-    let cw721_contract = RestNFTContract::default();
+    let cw721_contract = AstroHeroContract::default();
     let minter = cw721_contract.minter.load(deps.storage)?;
     if info.sender != minter {
         return Err(ContractError::Unauthorized {});
@@ -133,7 +133,7 @@ pub fn execute_mint(
     info: MessageInfo,
     mint_msg: MintMsg<Extension>,
 ) -> Result<Response, ContractError> {
-    let cw721_contract = RestNFTContract::default();
+    let cw721_contract = AstroHeroContract::default();
 
     let config = CONFIG.load(deps.storage)?;
     let current_count = cw721_contract.token_count(deps.storage)?;
@@ -152,7 +152,7 @@ pub fn execute_set_minter(
     info: MessageInfo,
     new_minter: String,
 ) -> Result<Response, ContractError> {
-    let cw721_contract = RestNFTContract::default();
+    let cw721_contract = AstroHeroContract::default();
     let minter = cw721_contract.minter.load(deps.storage)?;
     if info.sender != minter {
         return Err(ContractError::Unauthorized {});

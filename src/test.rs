@@ -8,7 +8,7 @@ mod tests {
     use cw721::{Cw721Query, NftInfoResponse};
     use cw721_base::MintMsg;
     use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
-    use crate::state::{Extension, Metadata, RestNFTContract};
+    use crate::state::{Extension, Metadata, AstroHeroContract};
 
     const CREATOR: &str = "creator";
     const PUBLIC: &str = "public";
@@ -50,7 +50,7 @@ mod tests {
     #[test]
     fn mint_limit() {
         let mut deps = mock_dependencies(&[]);
-        let contract = RestNFTContract::default();
+        let contract = AstroHeroContract::default();
 
         let info = mock_info(CREATOR, &[]);
         let init_msg = InstantiateMsg {
@@ -85,7 +85,7 @@ mod tests {
     #[test]
     fn burn() {
         let mut deps = mock_dependencies(&[]);
-        let contract = RestNFTContract::default();
+        let contract = AstroHeroContract::default();
 
         let info = mock_info(CREATOR, &[]);
         let init_msg = InstantiateMsg {
@@ -122,7 +122,7 @@ mod tests {
         // Token count decrements
         assert_eq!(token_count, 0);
 
-        let res = RestNFTContract::default().nft_info(deps.as_ref(), token_id.into());
+        let res = AstroHeroContract::default().nft_info(deps.as_ref(), token_id.into());
         match res {
             Ok(_) => panic!("Should not return token info"),
             Err(_) => {}
@@ -155,7 +155,7 @@ mod tests {
         let exec_msg = ExecuteMsg::Mint(mint_msg.clone());
         execute(deps.as_mut(), mock_env(), info.clone(), exec_msg).unwrap();
 
-        let res = RestNFTContract::default()
+        let res = AstroHeroContract::default()
             .nft_info(deps.as_ref(), token_id.into())
             .unwrap();
         assert_eq!(None, res.token_uri);
@@ -179,7 +179,7 @@ mod tests {
 
         execute(deps.as_mut(), mock_env(), info.clone(), exec_msg).unwrap();
 
-        let res = RestNFTContract::default()
+        let res = AstroHeroContract::default()
             .nft_info(deps.as_ref(), token_id.into())
             .unwrap();
         assert_eq!(Some("https://moon.com".to_string()), res.token_uri);
@@ -300,7 +300,7 @@ mod tests {
         let exec_msg = ExecuteMsg::Mint(mint_msg.clone());
         execute(deps.as_mut(), mock_env(), info.clone(), exec_msg).unwrap();
 
-        let res = RestNFTContract::default()
+        let res = AstroHeroContract::default()
             .nft_info(deps.as_ref(), token_id.into())
             .unwrap();
         assert_eq!(None, res.token_uri);

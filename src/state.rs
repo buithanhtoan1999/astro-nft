@@ -11,7 +11,7 @@ pub struct Config {
 }
 
 pub const CONFIG: Item<Config> = Item::new("config");
-pub type RestNFTContract<'a> = cw721_base::Cw721Contract<'a, Extension, Empty>;
+pub type AstroHeroContract<'a> = cw721_base::Cw721Contract<'a, Extension, Empty>;
 pub type Extension = Option<Metadata>;
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug, Default)]

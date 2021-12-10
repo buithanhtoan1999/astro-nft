@@ -5,7 +5,7 @@ use cosmwasm_std::{to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response,
 use cw2::{get_contract_version, set_contract_version};
 pub use cw721_base::{MintMsg, MinterResponse};
 use crate::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
-use crate::state::RestNFTContract;
+use crate::state::AstroHeroContract;
 
 use crate::execute::{execute_freeze, execute_mint, execute_set_minter, execute_update};
 
@@ -27,7 +27,7 @@ pub fn instantiate(
 
     CONFIG.save(deps.storage, &config)?;
 
-    RestNFTContract::default().instantiate(deps, env, info, msg.into())
+    AstroHeroContract::default().instantiate(deps, env, info, msg.into())
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
@@ -56,7 +56,7 @@ pub fn execute(
         ExecuteMsg::SetMinter { minter } => execute_set_minter(deps, env, info, minter),
 
         // CW721 methods
-        _ => RestNFTContract::default()
+        _ => AstroHeroContract::default()
             .execute(deps, env, info, msg.into())
             .map_err(|err| err.into()),
     }
@@ -68,7 +68,7 @@ pub fn query(deps: Deps, env: Env, msg: QueryMsg) -> StdResult<Binary> {
         QueryMsg::Config {} => to_binary(&query_config(deps)?),
         QueryMsg::Frozen {} => to_binary(&query_frozen(deps)?),
         // CW721 methods
-        _ => RestNFTContract::default().query(deps, env, msg.into()),
+        _ => AstroHeroContract::default().query(deps, env, msg.into()),
     }
 }
 

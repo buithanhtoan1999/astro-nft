@@ -8,10 +8,8 @@ use cw721::{
     NumTokensResponse, OwnerOfResponse, TokensResponse,
 };
 use cw721_base::{InstantiateMsg, MinterResponse};
-use crate::{
-    msg::{ExecuteMsg, QueryMsg},
-    state::Extension,
-};
+use astro_hero::msg::{ExecuteMsg, QueryMsg};
+use astro_hero::state::Extension;
 
 fn main() {
     let mut out_dir = current_dir().unwrap();
